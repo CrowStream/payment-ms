@@ -2,30 +2,44 @@ version: '3.4'
 
 services:
 
-  payment_ms:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: payment_ms
-    env_file: .env
-    ports:
-      - '8080:8080'
+    payment_ms:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: crowstream_payment_ms
+        container_name: crowstream_payment_ms
+        depends_on:
+            - payment_db
+        environment:
+            - PAYMENT_DB_URL=${PAYMENT_DB_URL}
+            - PAYMENT_DB_USER=${PAYMENT_DB_USER}
+            - PAYMENT_DB_PASSWORD=${PAYMENT_DB_PASSWORD}
+        ports:
+            - '8080:8080'
 
-  postgres:
-    image: postgres:14
-    environment:
-      - POSTGRES_USER=${POSTGRES_ROOT_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_ROOT_PASSWORD}
-    ports:
-      - '5432:5432'
-    volumes:
-      - data:/data/db
+    payment_db:
+        image: postgres:14.1
+        container_name: crowstream_payment_db
+        environment:
+            - POSTGRES_USER=${PAYMENT_DB_USER}
+            - POSTGRES_PASSWORD=${PAYMENT_DB_PASSWORD}
+            - POSTGRES_DB=${PAYMENT_DB_DATABASE}
+        ports:
+            - '5432:5432'
+        volumes:
+            - payment_data:/data/db
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - '8081:8080'
+    pgadmin:
+        image: dpage/pgadmin4
+        restart: always
+        container_name: crowstream_pgadmin4
+        depends_on:
+            - payment_db
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+            - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+        ports:
+            - '8045:80'
 
 volumes:
-  data:
+    payment_data:
