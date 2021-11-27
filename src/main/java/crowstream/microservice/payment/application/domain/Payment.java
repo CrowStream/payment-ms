@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +16,7 @@ public class Payment {
     private String accountId;
     private Long methodId;
     private Double amountApplied;
-    private Date paymentDate;
+    private OffsetDateTime paymentDate;
     private String description;
     private Integer status;
 
@@ -52,11 +52,11 @@ public class Payment {
         this.amountApplied = amountApplied;
     }
 
-    public Date getPaymentDate() {
+    public OffsetDateTime getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(OffsetDateTime paymentDate) {
         this.paymentDate = paymentDate;
     }
 

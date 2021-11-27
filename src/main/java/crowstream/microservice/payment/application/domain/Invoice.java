@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +15,8 @@ public class Invoice {
     private Long id;
     private String accountId;
     private Double amount;
-    private Date createdAt;
-    private Date limitDate;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime limitDate;
     private Long paymentId;
     private Integer state;
 
@@ -44,19 +44,19 @@ public class Invoice {
         this.amount = amount;
     }
 
-    public Date getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getLimitDate() {
+    public OffsetDateTime getLimitDate() {
         return limitDate;
     }
 
-    public void setLimitDate(Date limitDate) {
+    public void setLimitDate(OffsetDateTime limitDate) {
         this.limitDate = limitDate;
     }
 

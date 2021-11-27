@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +16,7 @@ public class GiftCard {
     private String cardCode;
     private Double amount;
     private Boolean isActive;
-    private Date expirationDate;
+    private OffsetDateTime expirationDate;
 
     public Long getId() {
         return id;
@@ -50,11 +50,11 @@ public class GiftCard {
         isActive = active;
     }
 
-    public Date getExpirationDate() {
+    public OffsetDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(OffsetDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
 }
