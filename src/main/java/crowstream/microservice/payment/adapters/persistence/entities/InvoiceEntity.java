@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "entity")
+@Table(name = "invoice")
 public class InvoiceEntity {
     @Id
     @SequenceGenerator(name = "invoice_id_generator",
