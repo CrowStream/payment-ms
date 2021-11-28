@@ -27,8 +27,13 @@ public class PaymentMethodJpaAdapter implements PaymentMethodPersistencePort {
 
     @Override
     public PaymentMethod save(PaymentMethod paymentMethod) {
-        Optional<GiftCardEntity> optionalCard = this.giftCardRepository.findById(paymentMethod.getGiftCardId());
-        PaymentMethodEntity entity = this.mapper.pojoToEntity(paymentMethod, optionalCard.orElse(null));
+        PaymentMethodEntity entity;
+        if (paymentMethod.getGiftCardId() != null) {
+            Optional<GiftCardEntity> optionalCard = this.giftCardRepository.findById(paymentMethod.getGiftCardId());
+            entity = this.mapper.pojoToEntity(paymentMethod, optionalCard.orElse(null));
+        } else {
+            entity = this.mapper.pojoToEntity(paymentMethod, null);
+        }
         PaymentMethodEntity saved = this.repository.save(entity);
         return this.mapper.entityToPojo(saved);
     }
