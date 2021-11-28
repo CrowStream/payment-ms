@@ -19,7 +19,8 @@ public class PaymentMethodMapper {
         PaymentMethod pojo = new PaymentMethod();
         pojo.setId(entity.getId());
         pojo.setAccountId(entity.getAccountId());
-        pojo.setGiftCardId(entity.getGiftCard().getId());
+        if (entity.getGiftCard() != null)
+            pojo.setGiftCardId(entity.getGiftCard().getId());
         pojo.setCardNumber(entity.getCardNumber());
         pojo.setCardExpiryDate(entity.getCardExpiryDate());
         pojo.setCardSecurityNumber(entity.getCardSecurityNumber());

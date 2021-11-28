@@ -20,7 +20,8 @@ public class PaymentMapper {
         Payment pojo = new Payment();
         pojo.setId(entity.getId());
         pojo.setAccountId(entity.getAccountId());
-        pojo.setMethodId(entity.getPaymentMethod().getId());
+        if (entity.getPaymentMethod() != null)
+            pojo.setMethodId(entity.getPaymentMethod().getId());
         pojo.setAmountApplied(entity.getAmountApplied());
         pojo.setPaymentDate(entity.getPaymentDate());
         pojo.setDescription(entity.getDescription());
