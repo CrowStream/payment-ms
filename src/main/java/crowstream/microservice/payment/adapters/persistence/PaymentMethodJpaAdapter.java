@@ -61,16 +61,25 @@ public class PaymentMethodJpaAdapter implements PaymentMethodPersistencePort {
 
     @Override
     public PaymentMethod update(PaymentMethod paymentMethod) {
+        if (!this.repository.existsById(paymentMethod.getId())) {
+            return null;
+        }
         return this.save(paymentMethod);
     }
 
     @Override
     public void deleteById(Long id) {
+        if (!this.repository.existsById(id)) {
+            return;
+        }
         this.repository.deleteById(id);
     }
 
     @Override
     public void deleteAllByAccountId(String accountId) {
+        if (this.repository.countByAccountId(accountId) < 1) {
+            return;
+        }
         this.repository.deleteAllByAccountId(accountId);
     }
 }

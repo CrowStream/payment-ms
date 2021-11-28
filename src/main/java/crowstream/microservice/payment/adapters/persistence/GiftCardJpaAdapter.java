@@ -45,11 +45,17 @@ public class GiftCardJpaAdapter implements GiftCardPersistencePort {
 
     @Override
     public GiftCard update(GiftCard card) {
+        if (!this.giftCardRepository.existsById(card.getId())) {
+            return null;
+        }
         return this.save(card);
     }
 
     @Override
     public void deleteById(Long id) {
+        if (!this.giftCardRepository.existsById(id)) {
+            return;
+        }
         this.giftCardRepository.deleteById(id);
     }
 }
