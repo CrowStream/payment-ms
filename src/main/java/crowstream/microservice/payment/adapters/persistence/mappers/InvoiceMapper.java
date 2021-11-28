@@ -19,7 +19,7 @@ public class InvoiceMapper {
     public Invoice entityToPojo(InvoiceEntity entity) {
         Invoice pojo = new Invoice();
         pojo.setId(entity.getId());
-        pojo.setAccountId(pojo.getAccountId());
+        pojo.setAccountId(entity.getAccountId());
         pojo.setAmount(entity.getAmount());
         pojo.setCreatedAt(entity.getCreatedAt());
         pojo.setLimitDate(entity.getLimitDate());
