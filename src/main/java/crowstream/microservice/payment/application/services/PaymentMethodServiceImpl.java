@@ -7,7 +7,7 @@ import crowstream.microservice.payment.application.ports.PaymentMethodServicePor
 import java.util.List;
 
 public class PaymentMethodServiceImpl implements PaymentMethodServicePort {
-    private PaymentMethodPersistencePort persistencePort;
+    private final PaymentMethodPersistencePort persistencePort;
 
     public PaymentMethodServiceImpl(PaymentMethodPersistencePort persistencePort) {
         this.persistencePort = persistencePort;
@@ -30,11 +30,17 @@ public class PaymentMethodServiceImpl implements PaymentMethodServicePort {
 
     @Override
     public PaymentMethod updatePaymentMethod(PaymentMethod paymentMethod) {
+        if (!this.persistencePort.existsById(paymentMethod.getId())) {
+            return null;
+        }
         return this.persistencePort.update(paymentMethod);
     }
 
     @Override
     public void deletePaymentMethodById(Long id) {
+        if (!this.persistencePort.existsById(id)) {
+            return;
+        }
         this.persistencePort.deleteById(id);
     }
 

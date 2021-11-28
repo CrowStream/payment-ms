@@ -11,6 +11,8 @@ import java.util.List;
 public interface PaymentMethodRepository extends CrudRepository<PaymentMethodEntity, Long> {
     List<PaymentMethodEntity> findAllByAccountId(String accountId);
 
+    long countById(Long id);
+
     @Transactional
     void deleteAllByAccountId(String accountId);
 }
