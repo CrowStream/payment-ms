@@ -68,7 +68,7 @@ public class PaymentMethodController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<Object> detelePaymentMethods(@RequestParam(name = "account_id") String accountId) {
+    public ResponseEntity<Object> deletePaymentMethods(@RequestParam(name = "account_id") String accountId) {
         this.servicePort.deletePaymentMethodsByAccountId(accountId);
         if (this.servicePort.getPaymentMethodsByAccountId(accountId).size() > 0) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while deleting payment methods");
