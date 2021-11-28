@@ -7,7 +7,7 @@ import crowstream.microservice.payment.application.ports.InvoiceServicePort;
 import java.util.List;
 
 public class InvoiceServiceImpl implements InvoiceServicePort {
-    private InvoicePersistencePort invoicePersistencePort;
+    private final InvoicePersistencePort invoicePersistencePort;
 
     public InvoiceServiceImpl(InvoicePersistencePort invoicePersistencePort) {
         this.invoicePersistencePort = invoicePersistencePort;
