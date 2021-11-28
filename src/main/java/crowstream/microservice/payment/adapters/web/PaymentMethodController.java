@@ -50,6 +50,9 @@ public class PaymentMethodController {
         if (method == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Payment method with id %d does not exist", id));
         }
+        if (!method.getAccountId().equals(paymentMethod.getAccountId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account id is not modifiable");
+        }
         PaymentMethod updated = this.servicePort.updatePaymentMethod(paymentMethod);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
