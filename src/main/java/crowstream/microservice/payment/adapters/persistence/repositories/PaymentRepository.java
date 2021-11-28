@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface PaymentRepository extends CrudRepository<PaymentEntity, Long> {
-    List<PaymentEntity> findAllByAccountId(String accountId);
+    List<PaymentEntity> findTop12ByAccountIdOrderByPaymentDateDesc(String accountId);
+    long countById(Long id);
 }

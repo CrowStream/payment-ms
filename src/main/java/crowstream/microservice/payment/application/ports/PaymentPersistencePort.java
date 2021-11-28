@@ -7,5 +7,6 @@ import java.util.List;
 public interface PaymentPersistencePort {
     Payment save(Payment payment);
     Payment findById(Long id);
-    List<Payment> findAllByAccountId(String accountId);
+    List<Payment> findTop12ByAccountId(String accountId);
+    Boolean existsById(Long id);
 }

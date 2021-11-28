@@ -7,7 +7,7 @@ import crowstream.microservice.payment.application.ports.PaymentServicePort;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentServicePort {
-    private PaymentPersistencePort paymentPersistencePort;
+    private final PaymentPersistencePort paymentPersistencePort;
 
     public PaymentServiceImpl(PaymentPersistencePort paymentPersistencePort) {
         this.paymentPersistencePort = paymentPersistencePort;
@@ -25,6 +25,6 @@ public class PaymentServiceImpl implements PaymentServicePort {
 
     @Override
     public List<Payment> getPaymentsByAccountId(String accountId) {
-        return this.paymentPersistencePort.findAllByAccountId(accountId);
+        return this.paymentPersistencePort.findTop12ByAccountId(accountId);
     }
 }
