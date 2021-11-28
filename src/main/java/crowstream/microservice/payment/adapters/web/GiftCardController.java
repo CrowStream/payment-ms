@@ -24,23 +24,39 @@ public class GiftCardController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @GetMapping("/id/{id}")
-    public GiftCard getGiftCardById(@PathVariable Long id) {
-        return this.servicePort.getGiftCardById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getGiftCardById(@PathVariable Long id) {
+        GiftCard giftCard = this.servicePort.getGiftCardById(id);
+        if (giftCard == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Gift card with id %d does not exist", id));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(giftCard);
     }
 
-    @GetMapping("/{code}")
-    public GiftCard getGiftCard(@PathVariable String code) {
-        return this.servicePort.getGiftCardByCardCode(code);
+    @GetMapping("")
+    public ResponseEntity<Object> getGiftCard(@RequestParam(name = "card_code") String code) {
+        GiftCard giftCard = this.servicePort.getGiftCardByCardCode(code);
+        if (giftCard == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No gift cards associated with the code provided");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(giftCard);
     }
 
     @PutMapping("/{id}")
-    public GiftCard updateGiftCard(@RequestBody GiftCard giftCard) {
-        return this.servicePort.updateGiftCard(giftCard);
+    public ResponseEntity<Object> updateGiftCard(@PathVariable Long id, @RequestBody GiftCard giftCard) {
+        if (this.servicePort.getGiftCardById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Gift card with id %d does not exist", id));
+        }
+        GiftCard updated = this.servicePort.updateGiftCard(giftCard);
+        return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteGiftCard(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteGiftCard(@PathVariable Long id) {
+        if (this.servicePort.getGiftCardById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Gift card with id %d does not exist", id));
+        }
         this.servicePort.deleteGiftCardById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Gift card deleted");
     }
 }
