@@ -13,6 +13,8 @@ public interface PaymentMethodRepository extends CrudRepository<PaymentMethodEnt
 
     long countById(Long id);
 
+    long countByAccountId(String accountId);
+
     @Transactional
     void deleteAllByAccountId(String accountId);
 }

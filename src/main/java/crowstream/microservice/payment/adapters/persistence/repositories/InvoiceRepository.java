@@ -11,6 +11,8 @@ import java.util.List;
 public interface InvoiceRepository extends CrudRepository<InvoiceEntity, Long> {
     List<InvoiceEntity> findAllByAccountId(String accountId);
 
+    long countByAccountId(String accountId);
+
     @Transactional
     void deleteAllByAccountId(String accountId);
 }
