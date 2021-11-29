@@ -53,6 +53,7 @@ public class PaymentMethodController {
         if (!method.getAccountId().equals(paymentMethod.getAccountId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account id is not modifiable");
         }
+        paymentMethod.setId(method.getId());
         PaymentMethod updated = this.servicePort.updatePaymentMethod(paymentMethod);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }

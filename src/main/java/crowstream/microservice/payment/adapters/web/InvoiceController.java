@@ -53,6 +53,7 @@ public class InvoiceController {
         if (!entity.getAccountId().equals(invoice.getAccountId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account id is not modifiable");
         }
+        invoice.setId(entity.getId());
         Invoice updated = this.servicePort.updateInvoice(invoice);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }

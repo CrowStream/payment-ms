@@ -47,6 +47,7 @@ public class GiftCardController {
         if (this.servicePort.getGiftCardById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Gift card with id %d does not exist", id));
         }
+        giftCard.setId(id);
         GiftCard updated = this.servicePort.updateGiftCard(giftCard);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
