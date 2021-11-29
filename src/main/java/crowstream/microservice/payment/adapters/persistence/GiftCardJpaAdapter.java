@@ -45,10 +45,16 @@ public class GiftCardJpaAdapter implements GiftCardPersistencePort {
 
     @Override
     public GiftCard update(GiftCard card) {
-        if (!this.giftCardRepository.existsById(card.getId())) {
+        Optional<GiftCardEntity> optionalGiftCard = this.giftCardRepository.findById(card.getId());
+        if (optionalGiftCard.isEmpty()) {
             return null;
         }
-        return this.save(card);
+        GiftCardEntity entity = optionalGiftCard.get();
+        entity.setCardCode(card.getCardCode());
+        entity.setAmount(card.getAmount());
+        entity.setActive(card.getActive());
+        entity.setExpirationDate(card.getExpirationDate());
+        return this.giftCardMapper.entityToPojo(this.giftCardRepository.save(entity));
     }
 
     @Override

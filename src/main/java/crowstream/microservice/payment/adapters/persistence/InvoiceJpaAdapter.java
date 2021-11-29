@@ -59,10 +59,20 @@ public class InvoiceJpaAdapter implements InvoicePersistencePort {
 
     @Override
     public Invoice update(Invoice invoice) {
-        if (!this.repository.existsById(invoice.getId())) {
+        Optional<InvoiceEntity> optionalInvoice = this.repository.findById(invoice.getId());
+        if (optionalInvoice.isEmpty()) {
             return null;
         }
-        return this.save(invoice);
+        InvoiceEntity entity = optionalInvoice.get();
+        entity.setAmount(invoice.getAmount());
+        entity.setCreatedAt(invoice.getCreatedAt());
+        entity.setLimitDate(invoice.getLimitDate());
+        if (invoice.getPaymentId() != null) {
+            Optional<PaymentEntity> optionalPayment = this.paymentRepository.findById(invoice.getId());
+            entity.setPayment(optionalPayment.orElse(null));
+        }
+        entity.setState(invoice.getState());
+        return this.mapper.entityToPojo(this.repository.save(entity));
     }
 
     @Override
