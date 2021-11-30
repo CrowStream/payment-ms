@@ -11,9 +11,11 @@ services:
         depends_on:
             - payment_db
         environment:
-            - PAYMENT_DB_URL=${PAYMENT_DB_URL}
+            - PAYMENT_DB_HOST=${PAYMENT_DB_HOST}
+            - PAYMENT_DB_PORT=${PAYMENT_DB_PORT}
             - PAYMENT_DB_USER=${PAYMENT_DB_USER}
             - PAYMENT_DB_PASSWORD=${PAYMENT_DB_PASSWORD}
+            - PAYMENT_DB_DATABASE=${PAYMENT_DB_DATABASE}
         ports:
             - '8080:8080'
 
