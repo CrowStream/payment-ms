@@ -1,5 +1,6 @@
 package crowstream.microservice.payment.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +14,12 @@ import java.time.OffsetDateTime;
 @Builder
 public class GiftCard {
     private Long id;
+    @JsonProperty("card_code")
     private String cardCode;
     private Double amount;
+    @JsonProperty("is_active")
     private Boolean isActive;
+    @JsonProperty("expiration_date")
     private OffsetDateTime expirationDate;
 
     public Long getId() {

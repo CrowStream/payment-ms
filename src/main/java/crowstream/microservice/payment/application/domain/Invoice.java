@@ -1,5 +1,6 @@
 package crowstream.microservice.payment.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +14,14 @@ import java.time.OffsetDateTime;
 @Builder
 public class Invoice {
     private Long id;
+    @JsonProperty("account_id")
     private String accountId;
     private Double amount;
+    @JsonProperty("created_at")
     private OffsetDateTime createdAt;
+    @JsonProperty("limit_date")
     private OffsetDateTime limitDate;
+    @JsonProperty("payment_id")
     private Long paymentId;
     private Integer state;
 

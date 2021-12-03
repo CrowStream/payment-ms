@@ -1,5 +1,6 @@
 package crowstream.microservice.payment.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +12,15 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PaymentMethod {
     private Long id;
+    @JsonProperty("account_id")
     private String accountId;
+    @JsonProperty("gift_card_id")
     private Long giftCardId;
+    @JsonProperty("card_number")
     private String cardNumber;
+    @JsonProperty("card_expiry_date")
     private String cardExpiryDate;
+    @JsonProperty("card_security_number")
     private String cardSecurityNumber;
 
     public Long getId() {
