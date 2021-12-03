@@ -58,4 +58,26 @@ public class PaymentJpaAdapter implements PaymentPersistencePort {
     public Boolean existsById(Long id) {
         return this.repository.countById(id) > 0;
     }
+
+    @Override
+    public Payment update(Payment payment) {
+        Optional<PaymentEntity> optionalPayment = this.repository.findById(payment.getId());
+        if (optionalPayment.isEmpty()) {
+            return null;
+        }
+        PaymentEntity entity = optionalPayment.get();
+        entity.setAmountApplied(payment.getAmountApplied());
+        entity.setPaymentDate(payment.getPaymentDate());
+        entity.setDescription(payment.getDescription());
+        entity.setStatus(payment.getStatus());
+        return this.mapper.entityToPojo(this.repository.save(entity));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        if (!this.repository.existsById(id)) {
+            return;
+        }
+        this.repository.deleteById(id);
+    }
 }

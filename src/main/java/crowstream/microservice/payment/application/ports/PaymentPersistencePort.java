@@ -9,4 +9,6 @@ public interface PaymentPersistencePort {
     Payment findById(Long id);
     List<Payment> findTop12ByAccountId(String accountId);
     Boolean existsById(Long id);
+    Payment update(Payment payment);
+    void deleteById(Long id);
 }

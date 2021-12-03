@@ -16,7 +16,7 @@ public class PaymentEntity {
     private String accountId;
 
     @OneToOne
-    @JoinColumn(name = "method_id", referencedColumnName = "id")
+    @JoinColumn(name = "method_id", referencedColumnName = "id", nullable = false)
     private PaymentMethodEntity paymentMethod;
 
     @Column(name = "amount_applied", nullable = false)

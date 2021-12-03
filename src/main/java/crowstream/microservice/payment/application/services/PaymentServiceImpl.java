@@ -27,4 +27,14 @@ public class PaymentServiceImpl implements PaymentServicePort {
     public List<Payment> getPaymentsByAccountId(String accountId) {
         return this.paymentPersistencePort.findTop12ByAccountId(accountId);
     }
+
+    @Override
+    public Payment update(Payment payment) {
+        return this.paymentPersistencePort.update(payment);
+    }
+
+    @Override
+    public void deletePaymentById(Long id) {
+        this.paymentPersistencePort.deleteById(id);
+    }
 }
