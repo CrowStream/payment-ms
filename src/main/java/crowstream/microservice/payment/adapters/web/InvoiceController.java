@@ -36,7 +36,7 @@ public class InvoiceController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Object> getInvoices(@RequestParam String accountId) {
+    public ResponseEntity<Object> getInvoices(@RequestParam("account_id") String accountId) {
         List<Invoice> invoices = this.servicePort.getInvoicesByAccountId(accountId);
         if (invoices.size() == 0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No invoices associated with the account id provided");
@@ -69,7 +69,7 @@ public class InvoiceController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<Object> deleteInvoices(@RequestParam String accountId) {
+    public ResponseEntity<Object> deleteInvoices(@RequestParam("account_id") String accountId) {
         this.servicePort.deleteInvoicesByAccountId(accountId);
         if (this.servicePort.getInvoicesByAccountId(accountId).size() > 0) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while deleting invoices");

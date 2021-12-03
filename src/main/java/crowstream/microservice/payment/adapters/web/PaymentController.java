@@ -33,7 +33,7 @@ public class PaymentController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Object> getPayments(@RequestParam String accountId) {
+    public ResponseEntity<Object> getPayments(@RequestParam("account_id") String accountId) {
         List<Payment> payments = this.servicePort.getPaymentsByAccountId(accountId);
         if (payments.size() == 0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No payment methods associated with the account id provided");
