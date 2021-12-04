@@ -50,7 +50,7 @@ public class InvoiceController {
         if (entity == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Invoice with id %d does not exist", id));
         }
-        if (!entity.getAccountId().equals(invoice.getAccountId())) {
+        if (!entity.getAccountId().equals(invoice.getAccountId()) && invoice.getAccountId() != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account id is not modifiable");
         }
         invoice.setId(entity.getId());

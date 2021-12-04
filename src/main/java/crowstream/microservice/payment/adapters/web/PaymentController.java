@@ -20,6 +20,9 @@ public class PaymentController {
     @PostMapping("")
     public ResponseEntity<Object> addPayment(@RequestBody Payment payment) {
         Payment saved = this.servicePort.addPayment(payment);
+        if (saved == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data for payment creation");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -47,7 +50,7 @@ public class PaymentController {
         if (entity == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Payment with id %d does not exist", id));
         }
-        if (!entity.getAccountId().equals(payment.getAccountId())) {
+        if (!entity.getAccountId().equals(payment.getAccountId()) && payment.getAccountId() != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account id is not modifiable");
         }
         payment.setId(entity.getId());
