@@ -76,6 +76,10 @@ public class PaymentJpaAdapter implements PaymentPersistencePort {
         entity.setPaymentDate(payment.getPaymentDate());
         entity.setDescription(payment.getDescription());
         entity.setStatus(payment.getStatus());
+        if (payment.getMethodId() != null) {
+            Optional<PaymentMethodEntity> optionalMethod = this.methodRepository.findById(payment.getMethodId());
+            entity.setPaymentMethod(optionalMethod.orElse(null));
+        }
         return this.mapper.entityToPojo(this.repository.save(entity));
     }
 
