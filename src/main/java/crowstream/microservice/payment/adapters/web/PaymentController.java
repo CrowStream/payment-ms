@@ -1,5 +1,6 @@
 package crowstream.microservice.payment.adapters.web;
 
+import crowstream.microservice.payment.adapters.web.response.MessageResponse;
 import crowstream.microservice.payment.application.domain.Payment;
 import crowstream.microservice.payment.application.ports.PaymentServicePort;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class PaymentController {
     public ResponseEntity<Object> addPayment(@RequestBody Payment payment) {
         Payment saved = this.servicePort.addPayment(payment);
         if (saved == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data for payment creation");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Invalid data for payment creation"));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
@@ -30,7 +31,7 @@ public class PaymentController {
     public ResponseEntity<Object> getPayment(@PathVariable Long id) {
         Payment payment = this.servicePort.getPaymentById(id);
         if (payment == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Payment with id %d does not exist", id));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(String.format("Payment with id %d does not exist", id)));
         }
         return ResponseEntity.status(HttpStatus.OK).body(payment);
     }
@@ -38,9 +39,6 @@ public class PaymentController {
     @GetMapping("")
     public ResponseEntity<Object> getPayments(@RequestParam("account_id") String accountId) {
         List<Payment> payments = this.servicePort.getPaymentsByAccountId(accountId);
-        if (payments.size() == 0) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No payment methods associated with the account id provided");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(payments);
     }
 
@@ -48,10 +46,10 @@ public class PaymentController {
     public ResponseEntity<Object> updatePayment(@PathVariable Long id, @RequestBody Payment payment) {
         Payment entity = this.servicePort.getPaymentById(id);
         if (entity == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Payment with id %d does not exist", id));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(String.format("Payment with id %d does not exist", id)));
         }
         if (!entity.getAccountId().equals(payment.getAccountId()) && payment.getAccountId() != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account id is not modifiable");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Account id is not modifiable"));
         }
         payment.setId(entity.getId());
         Payment updated = this.servicePort.update(payment);
@@ -62,9 +60,9 @@ public class PaymentController {
     public ResponseEntity<Object> deletePayment(@PathVariable Long id) {
         Payment entity = this.servicePort.getPaymentById(id);
         if (entity == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Payment with id %d does not exist", id));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(String.format("Payment with id %d does not exist", id)));
         }
         this.servicePort.deletePaymentById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Payment deleted");
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
